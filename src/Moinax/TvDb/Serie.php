@@ -36,7 +36,7 @@ class Serie
     public $overview;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     public $firstAired;
 
@@ -76,7 +76,7 @@ class Serie
     public $network = '';
 
     /**
-     * @var string
+     * @var float
      */
     public $rating = '';
 
@@ -147,7 +147,7 @@ class Serie
         $this->name = (string)$data->SeriesName;
         $this->banner = (string)$data->banner;
         $this->overview = (string)$data->Overview;
-        $this->firstAired = new \DateTime((string)$data->FirstAired);
+        $this->firstAired = (string)$data->FirstAired !== '' ? new \DateTime((string)$data->FirstAired) : null;
         $this->imdbId = (string)$data->IMDB_ID;
         $this->actors = (array)Client::removeEmptyIndexes(explode('|', (string)$data->Actors));
         $this->airsDayOfWeek = (string)$data->Airs_DayOfWeek;
@@ -155,8 +155,8 @@ class Serie
         $this->contentRating = (string)$data->ContentRating;
         $this->genres = (array)Client::removeEmptyIndexes(explode('|', (string)$data->Genre));
         $this->network = (string)$data->Network;
-        $this->rating = (string)$data->Rating;
-        $this->ratingCount = (string)$data->RatingCount;
+        $this->rating = (float)$data->Rating;
+        $this->ratingCount = (int)$data->RatingCount;
         $this->runtime = (int)$data->Runtime;
         $this->status = (string)$data->Status;
         $this->added = new \DateTime((string)$data->added);

@@ -141,7 +141,6 @@ class Client
      *
      * @param string $seriesName
      * @param string $language
-     * @internal param string $seriesName the show name to search for
      * @return array
      */
     public function getSeries($seriesName, $language = null)
@@ -294,6 +293,20 @@ class Client
 
         $data = $this->fetchXml('episodes/' . $episodeId . '/' . $language . '.xml');
 
+        return new Episode($data->Episode);
+    }
+    
+    /**
+     * @param      $serieId
+     * @param      $airdate
+     * @param null $language
+     *
+     * @return Episode
+     */
+    public function getEpisodeByAirDate($serieId, $airdate, $language = null)
+    {
+        $language = $language ? : $this->defaultLanguage;
+        $data = $this->fetchXml('GetEpisodeByAirDate.php?apikey=' . $this->apiKey . '&seriesid=' . $serieId . '&airdate=' . $airdate . '&language=' . $language );
         return new Episode($data->Episode);
     }
 
